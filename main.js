@@ -5,7 +5,7 @@ var writerStream = fs.createWriteStream('output.txt');
 
 app.use(express.static('public'));
 
-var secret = "1234";
+
 var response = "";
 var tx = "";
 
@@ -30,24 +30,38 @@ app.get('/game', function (req, res) {
 	});
 	
   // 	writerStream.end();
-   console.log(getHint(secret,response));
-   res.end(getHint(secret,response));
+   console.log(getHint(randomNumber,response));
+   res.end(getHint(randomNumber,response));
 })
 
 	
 
-	
-
-	// Mark the end of file
-
-	
-	// Handle stream events --> finish, and error
 	
 
 app.get('/output.txt', function (req, res) {
    res.sendFile( __dirname + "/" + "output.txt" );
 })
 
+
+function validNumber(number) {
+    return !hasRepeatingDigits(number) && number > 999 && number < 10000;
+  }
+  
+  function hasRepeatingDigits(number) {
+    var i, j;    
+    number += '';
+    for (i = 0; i < number.length - 1; i++) {
+      for (j = i + 1; j < number.length; j++) {
+        if (number.charAt(i) == number.charAt(j)) {
+          return true;
+        }
+      }
+    }
+  }
+while(!validNumber(randomNumber)){
+var randomNumber = Math.floor((Math.random() * 9000) + 1000);
+console.log("The number is: " + randomNumber);
+}
 
 
 function getHint(secret, guess) {
